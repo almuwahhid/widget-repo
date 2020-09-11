@@ -1,0 +1,3 @@
+include ':pakaryo-widget'
+include ':app'
+rootProject.name = "pakaryowidhet"
