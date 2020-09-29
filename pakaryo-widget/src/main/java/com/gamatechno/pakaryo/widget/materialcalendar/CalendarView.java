@@ -422,6 +422,11 @@ public class CalendarView extends LinearLayout {
         }
     }
 
+    public void addEventToday(EventDay eventDay){
+        mCalendarProperties.addEventToday(eventDay);
+        mCalendarPageAdapter.notifyDataSetChanged();
+    }
+
     /**
      * @return List of Calendar object representing a selected dates
      */

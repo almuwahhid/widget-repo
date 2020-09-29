@@ -245,6 +245,15 @@ public class CalendarProperties {
         mEventDays = eventDays;
     }
 
+    public void addEventToday(EventDay eventDay){
+        for (EventDay e : getEventDays()){
+            if(e.isToday()){
+                getEventDays().remove(e);
+            }
+        }
+        getEventDays().add(eventDay);
+    }
+
     public List<Calendar> getDisabledDays() {
         return mDisabledDays;
     }

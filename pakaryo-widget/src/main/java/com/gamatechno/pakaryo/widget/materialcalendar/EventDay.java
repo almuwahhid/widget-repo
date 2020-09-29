@@ -22,6 +22,7 @@ public class EventDay {
     private Object mDrawable;
     private int mLabelColor;
     private boolean mIsDisabled;
+    private boolean isToday;
 
     /**
      * @param day Calendar object which represents a date of the event
@@ -38,6 +39,14 @@ public class EventDay {
         DateUtils.setMidnight(day);
         mDay = day;
         mDrawable = drawable;
+        this.isToday = false;
+    }
+
+    public EventDay(Calendar day, @DrawableRes int drawable, boolean isToday) {
+        DateUtils.setMidnight(day);
+        mDay = day;
+        mDrawable = drawable;
+        this.isToday = isToday;
     }
 
     /**
@@ -48,6 +57,14 @@ public class EventDay {
         DateUtils.setMidnight(day);
         mDay = day;
         mDrawable = drawable;
+        this.isToday = false;
+    }
+
+    public EventDay(Calendar day, Drawable drawable, boolean isToday) {
+        DateUtils.setMidnight(day);
+        mDay = day;
+        mDrawable = drawable;
+        this.isToday = isToday;
     }
 
     /**
@@ -60,6 +77,15 @@ public class EventDay {
         mDay = day;
         mDrawable = drawable;
         mLabelColor = labelColor;
+        this.isToday = false;
+    }
+
+    public EventDay(Calendar day, @DrawableRes int drawable , int labelColor, boolean isToday) {
+        DateUtils.setMidnight(day);
+        mDay = day;
+        mDrawable = drawable;
+        mLabelColor = labelColor;
+        this.isToday = isToday;
     }
 
 
@@ -73,6 +99,15 @@ public class EventDay {
         mDay = day;
         mDrawable = drawable;
         mLabelColor = labelColor;
+        this.isToday = false;
+    }
+
+    public EventDay(Calendar day, Drawable drawable , int labelColor, boolean isToday) {
+        DateUtils.setMidnight(day);
+        mDay = day;
+        mDrawable = drawable;
+        mLabelColor = labelColor;
+        this.isToday = isToday;
     }
 
 
@@ -92,6 +127,13 @@ public class EventDay {
         return mLabelColor;
     }
 
+    /**
+     * @return Color which will be displayed as row label isToday
+     */
+    @RestrictTo(RestrictTo.Scope.LIBRARY)
+    public boolean isToday() {
+        return isToday;
+    }
 
     /**
      * @return Calendar object which represents a date of current event
