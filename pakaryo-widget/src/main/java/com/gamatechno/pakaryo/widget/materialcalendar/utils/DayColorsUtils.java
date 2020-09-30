@@ -1,6 +1,7 @@
 package com.gamatechno.pakaryo.widget.materialcalendar.utils;
 
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.widget.TextView;
 
 import com.gamatechno.pakaryo.widget.R;
@@ -66,6 +67,7 @@ public class DayColorsUtils {
             setTodayColors(dayLabel, calendarProperties);
         } else if (EventDayUtils.isEventDayWithLabelColor(day, calendarProperties)) {
             setEventDayColors(day, dayLabel, calendarProperties);
+//        TODO : hi
         } else if (calendarProperties.getHighlightedDays().contains(day)) {
             setHighlightedDayColors(dayLabel, calendarProperties);
         } else {
@@ -79,7 +81,7 @@ public class DayColorsUtils {
 
         // Sets custom background color for present
         if (calendarProperties.getTodayColor() != 0) {
-            setDayColors(dayLabel, calendarProperties.getSelectionLabelColor(), Typeface.NORMAL,
+            setDayColors(dayLabel, calendarProperties.getSelectionLabelColor(), Typeface.BOLD,
                     R.drawable.background_color_circle_selector);
             setDayBackgroundColor(dayLabel, calendarProperties.getTodayColor());
         }
@@ -89,6 +91,9 @@ public class DayColorsUtils {
         EventDayUtils.getEventDayWithLabelColor(day, calendarProperties).executeIfPresent(eventDay ->
                 DayColorsUtils.setDayColors(dayLabel, eventDay.getLabelColor(),
                         Typeface.NORMAL, R.drawable.background_transparent));
+        EventDayUtils.getEventDayWithLabelColor(day, calendarProperties).executeIfPresent(eventDay ->
+                dayLabel.setBackground((Drawable) eventDay.getImageDrawable()));
+//        TODO : hi
     }
 
     private static void setHighlightedDayColors(TextView dayLabel, CalendarProperties calendarProperties) {
