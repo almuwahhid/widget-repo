@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
-
+    <Button
+        android:text="Mulai"
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="Selesai"
+        android:id="@+id/btn_finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <com.gamatechno.pakaryo.widget.materialcalendar.CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
@@ -17,4 +27,4 @@
         app:abbreviationsBarColor="@color/colorAccent"
         android:layout_height="wrap_content" />
 
-</RelativeLayout>
+</LinearLayout>

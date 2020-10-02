@@ -2,6 +2,7 @@ package com.gamatechno.pakaryo.widget.materialcalendar.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
@@ -241,6 +242,46 @@ public class CalendarProperties {
         return mEventDays;
     }
 
+    public void clearEventDay(EventDay eventDay){
+        mEventDays.remove(eventDay);
+    }
+
+    public boolean isFinishedDateSet(){
+        for(EventDay e : getEventDays()){
+            if(e.getType().equals(EventDay.TYPE_FINISH)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isStartDateSet(){
+        for(EventDay e : getEventDays()){
+            if(e.getType().equals(EventDay.TYPE_START)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public EventDay getFinishedDateEvent(){
+        for(EventDay e : getEventDays()){
+            if(e.getType().equals(EventDay.TYPE_FINISH)){
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public EventDay getStarDateEvent(){
+        for(EventDay e : getEventDays()){
+            if(e.getType().equals(EventDay.TYPE_START)){
+                return e;
+            }
+        }
+        return null;
+    }
+
     public void setEventDays(List<EventDay> eventDays) {
         mEventDays = eventDays;
     }
@@ -252,6 +293,24 @@ public class CalendarProperties {
             }
         }
         getEventDays().add(eventDay);
+    }
+
+    public void removeFinishedEvent(){
+        for (int i = 0; i < getEventDays().size(); i++) {
+            EventDay e = getEventDays().get(i);
+            if(e.getType().equals(EventDay.TYPE_FINISH)){
+                getEventDays().remove(e);
+            }
+        }
+    }
+
+    public void removeStartedEvent(){
+        for (int i = 0; i < getEventDays().size(); i++) {
+            EventDay e = getEventDays().get(i);
+            if(e.getType().equals(EventDay.TYPE_START)){
+                getEventDays().remove(e);
+            }
+        }
     }
 
     public List<Calendar> getDisabledDays() {
@@ -286,6 +345,24 @@ public class CalendarProperties {
 
     public void setSelectedDay(Calendar calendar) {
         setSelectedDay(new SelectedDay(calendar));
+    }
+
+    public void clearEventDays(){
+        getEventDays().clear();
+    }
+
+    public void clearGeneralEventDays(){
+        for (int i = 0; i < getEventDays().size(); i++) {
+            EventDay e = getEventDays().get(i);
+            if(e.getType().equals(EventDay.TYPE_GENERAL)){
+                getEventDays().remove(i);
+            }
+        }
+
+        Log.d("Logs", "clearGeneralEventDays: "+getEventDays().size());
+        /*for(EventDay e : getEventDays()){
+
+        }*/
     }
 
     public void setSelectedDay(SelectedDay selectedDay) {

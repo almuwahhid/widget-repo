@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.ColorRes;
 import androidx.viewpager.widget.ViewPager;
@@ -19,6 +21,7 @@ import com.gamatechno.pakaryo.widget.materialcalendar.adapters.CalendarPageAdapt
 import com.gamatechno.pakaryo.widget.materialcalendar.exceptions.ErrorsMessages;
 import com.gamatechno.pakaryo.widget.materialcalendar.exceptions.OutOfDateRangeException;
 import com.gamatechno.pakaryo.widget.materialcalendar.extensions.CalendarViewPager;
+import com.gamatechno.pakaryo.widget.materialcalendar.helper.CalendarViewHelper;
 import com.gamatechno.pakaryo.widget.materialcalendar.listeners.OnCalendarPageChangeListener;
 import com.gamatechno.pakaryo.widget.materialcalendar.listeners.OnDayClickListener;
 import com.gamatechno.pakaryo.widget.materialcalendar.utils.AppearanceUtils;
@@ -26,6 +29,7 @@ import com.gamatechno.pakaryo.widget.materialcalendar.utils.CalendarProperties;
 import com.gamatechno.pakaryo.widget.materialcalendar.utils.DateUtils;
 import com.gamatechno.pakaryo.widget.materialcalendar.utils.SelectedDay;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -426,6 +430,86 @@ public class CalendarView extends LinearLayout {
         mCalendarProperties.addEventToday(eventDay);
         mCalendarPageAdapter.notifyDataSetChanged();
     }
+
+    public void addEventStart(EventDay eventDay, Drawable drawable, int color){
+        if(mCalendarProperties.isFinishedDateSet()){
+            if(mCalendarProperties.getFinishedDateEvent() != null){
+                EventDay finishday = mCalendarProperties.getFinishedDateEvent();
+                if(finishday.getCalendar().getTime().after(eventDay.getCalendar().getTime())){
+//                    mCalendarProperties.removeStartedEvent();//a
+                    mCalendarProperties.clearEventDays();
+//                    mCalendarProperties.clearGeneralEventDays();
+                    mCalendarProperties.addEventToday(eventDay);
+                    mCalendarProperties.addEventToday(finishday);
+                    mCalendarPageAdapter.notifyDataSetChanged();
+                    addEventDaysOnRange(eventDay, finishday, drawable, color);
+                } else {
+                    mCalendarProperties.clearEventDays();
+                    mCalendarProperties.addEventToday(eventDay);
+                    mCalendarPageAdapter.notifyDataSetChanged();
+                }
+            } else {
+                mCalendarProperties.clearEventDays();
+                mCalendarProperties.addEventToday(eventDay);
+                mCalendarPageAdapter.notifyDataSetChanged();
+            }
+        } else {
+            mCalendarProperties.clearEventDays();
+            mCalendarProperties.addEventToday(eventDay);
+            mCalendarPageAdapter.notifyDataSetChanged();
+        }
+        mCalendarPageAdapter.notifyDataSetChanged();
+    }
+
+    public void addEventFinish(Context context, EventDay eventDay, Drawable drawable, int color){
+        if(mCalendarProperties.isFinishedDateSet()) {
+            if (mCalendarProperties.getFinishedDateEvent() != null) {
+//                EventDay finishday = mCalendarProperties.getFinishedDateEvent();
+                mCalendarProperties.removeFinishedEvent();
+                checkFinishOnStart(context, eventDay, drawable, color);
+            }
+        } else {
+            checkFinishOnStart(context, eventDay, drawable, color);
+        }
+        mCalendarPageAdapter.notifyDataSetChanged();
+    }
+
+    private void checkFinishOnStart(Context context, EventDay eventDay, Drawable drawable, int color){
+        if(mCalendarProperties.isStartDateSet()){
+            if(mCalendarProperties.getStarDateEvent() != null){
+                EventDay startday = mCalendarProperties.getStarDateEvent();
+                if(startday.getCalendar().getTime().before(eventDay.getCalendar().getTime())){
+                    mCalendarProperties.removeFinishedEvent();
+//                    mCalendarProperties.clearGeneralEventDays();
+                    mCalendarProperties.clearEventDays();
+                    mCalendarProperties.addEventToday(eventDay);
+                    mCalendarProperties.addEventToday(startday);
+                    mCalendarPageAdapter.notifyDataSetChanged();
+                    addEventDaysOnRange(startday, eventDay, drawable, color);
+                } else {
+                    Toast.makeText(context, "Finish date must be after start date", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(context, "Start Date is null", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(context, "Start Date is empty", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void addEventDaysOnRange(EventDay e1, EventDay e2, Drawable drawable, int color){
+        String date1 = e1.getCalendar().get(Calendar.YEAR)+"-"+String.format("%02d", (e1.getCalendar().get(Calendar.MONTH)+1))+"-"+e1.getCalendar().get(Calendar.DAY_OF_MONTH);
+        String date2 = e2.getCalendar().get(Calendar.YEAR)+"-"+String.format("%02d", (e2.getCalendar().get(Calendar.MONTH)+1))+"-"+e2.getCalendar().get(Calendar.DAY_OF_MONTH);
+
+        try {
+            mCalendarProperties.getEventDays().addAll(CalendarViewHelper.parseListEventDates(CalendarViewHelper.getDaysRange(date1, date2, true), drawable, color));
+            mCalendarPageAdapter.notifyDataSetChanged();
+            Log.d("Logs", "addEventDaysOnRange: "+mCalendarProperties.getEventDays().size());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * @return List of Calendar object representing a selected dates

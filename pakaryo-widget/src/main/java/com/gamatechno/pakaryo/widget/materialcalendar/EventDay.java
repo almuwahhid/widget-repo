@@ -18,11 +18,16 @@ import java.util.Calendar;
  */
 
 public class EventDay {
+    public final static String TYPE_GENERAL = "0";
+    public final static String TYPE_START = "1";
+    public final static String TYPE_FINISH = "2";
+
     private Calendar mDay;
     private Object mDrawable;
     private int mLabelColor;
     private boolean mIsDisabled;
     private boolean isToday;
+    private String type = TYPE_GENERAL;
 
     /**
      * @param day Calendar object which represents a date of the event
@@ -40,6 +45,7 @@ public class EventDay {
         mDay = day;
         mDrawable = drawable;
         this.isToday = false;
+        this.type = TYPE_GENERAL;
     }
 
     public EventDay(Calendar day, @DrawableRes int drawable, boolean isToday) {
@@ -47,6 +53,14 @@ public class EventDay {
         mDay = day;
         mDrawable = drawable;
         this.isToday = isToday;
+        this.type = TYPE_GENERAL;
+    }
+    
+    public EventDay(Calendar day, @DrawableRes int drawable, String type) {
+        DateUtils.setMidnight(day);
+        mDay = day;
+        mDrawable = drawable;
+        this.type = type;
     }
 
     /**
@@ -58,6 +72,7 @@ public class EventDay {
         mDay = day;
         mDrawable = drawable;
         this.isToday = false;
+        this.type = TYPE_GENERAL;
     }
 
     public EventDay(Calendar day, Drawable drawable, boolean isToday) {
@@ -65,6 +80,14 @@ public class EventDay {
         mDay = day;
         mDrawable = drawable;
         this.isToday = isToday;
+        this.type = TYPE_GENERAL;
+    } 
+    
+    public EventDay(Calendar day, Drawable drawable, String type) {
+        DateUtils.setMidnight(day);
+        mDay = day;
+        mDrawable = drawable;
+        this.type = type;
     }
 
     /**
@@ -78,6 +101,7 @@ public class EventDay {
         mDrawable = drawable;
         mLabelColor = labelColor;
         this.isToday = false;
+        this.type = TYPE_GENERAL;
     }
 
     public EventDay(Calendar day, @DrawableRes int drawable , int labelColor, boolean isToday) {
@@ -86,6 +110,15 @@ public class EventDay {
         mDrawable = drawable;
         mLabelColor = labelColor;
         this.isToday = isToday;
+        this.type = TYPE_GENERAL;
+    }
+    
+    public EventDay(Calendar day, @DrawableRes int drawable , int labelColor, String type) {
+        DateUtils.setMidnight(day);
+        mDay = day;
+        mDrawable = drawable;
+        mLabelColor = labelColor;
+        this.type = type;
     }
 
 
@@ -100,6 +133,7 @@ public class EventDay {
         mDrawable = drawable;
         mLabelColor = labelColor;
         this.isToday = false;
+        this.type = TYPE_GENERAL;
     }
 
     public EventDay(Calendar day, Drawable drawable , int labelColor, boolean isToday) {
@@ -108,6 +142,16 @@ public class EventDay {
         mDrawable = drawable;
         mLabelColor = labelColor;
         this.isToday = isToday;
+        this.type = TYPE_GENERAL;
+    }
+
+    public EventDay(Calendar day, Drawable drawable , int labelColor, String type) {
+        DateUtils.setMidnight(day);
+        mDay = day;
+        mDrawable = drawable;
+        mLabelColor = labelColor;
+        this.isToday = false;
+        this.type = type;
     }
 
 
@@ -142,6 +186,9 @@ public class EventDay {
         return mDay;
     }
 
+    public String getType() {
+        return type;
+    }
 
     /**
      * @return Boolean value if day is not disabled
