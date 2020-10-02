@@ -30,6 +30,7 @@ import com.gamatechno.pakaryo.widget.materialcalendar.utils.DateUtils;
 import com.gamatechno.pakaryo.widget.materialcalendar.utils.SelectedDay;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -508,6 +509,20 @@ public class CalendarView extends LinearLayout {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public List parseDaysOnRange(EventDay e1, EventDay e2, Drawable drawable, int color){
+        ArrayList<EventDay> datas = new ArrayList<>();
+        try {
+            String date1 = e1.getCalendar().get(Calendar.YEAR)+"-"+String.format("%02d", (e1.getCalendar().get(Calendar.MONTH)+1))+"-"+e1.getCalendar().get(Calendar.DAY_OF_MONTH);
+            String date2 = e2.getCalendar().get(Calendar.YEAR)+"-"+String.format("%02d", (e2.getCalendar().get(Calendar.MONTH)+1))+"-"+e2.getCalendar().get(Calendar.DAY_OF_MONTH);
+            datas.addAll(CalendarViewHelper.parseListEventDates(CalendarViewHelper.getDaysRange(date1, date2, true), drawable, color));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return datas;
     }
 
 
