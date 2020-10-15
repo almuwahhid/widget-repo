@@ -436,6 +436,10 @@ public class CalendarView extends LinearLayout {
         return mCalendarProperties.isFinishedDateSet();
     }
 
+    public boolean isStartDateSet(){
+        return mCalendarProperties.isStartDateSet();
+    }
+
     public void addEventStart(EventDay eventDay, Drawable drawable, int color){
         if(mCalendarProperties.isFinishedDateSet()){
             if(mCalendarProperties.getFinishedDateEvent() != null){
