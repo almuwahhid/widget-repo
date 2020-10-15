@@ -432,6 +432,10 @@ public class CalendarView extends LinearLayout {
         mCalendarPageAdapter.notifyDataSetChanged();
     }
 
+    public boolean isFinishedDateSet(){
+        return mCalendarProperties.isFinishedDateSet();
+    }
+
     public void addEventStart(EventDay eventDay, Drawable drawable, int color){
         if(mCalendarProperties.isFinishedDateSet()){
             if(mCalendarProperties.getFinishedDateEvent() != null){
@@ -479,7 +483,7 @@ public class CalendarView extends LinearLayout {
         if(mCalendarProperties.isStartDateSet()){
             if(mCalendarProperties.getStarDateEvent() != null){
                 EventDay startday = mCalendarProperties.getStarDateEvent();
-                if(startday.getCalendar().getTime().before(eventDay.getCalendar().getTime())){
+                if(startday.getCalendar().getTime().before(eventDay.getCalendar().getTime()) || startday.getCalendar().getTime().equals(eventDay.getCalendar().getTime())){
                     mCalendarProperties.removeFinishedEvent();
 //                    mCalendarProperties.clearGeneralEventDays();
                     mCalendarProperties.clearEventDays();
