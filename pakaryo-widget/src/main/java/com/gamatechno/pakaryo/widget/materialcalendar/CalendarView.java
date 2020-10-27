@@ -453,24 +453,24 @@ public class CalendarView extends LinearLayout {
                 EventDay finishday = mCalendarProperties.getFinishedDateEvent();
                 if(finishday.getCalendar().getTime().after(eventDay.getCalendar().getTime())){
 //                    mCalendarProperties.removeStartedEvent();//a
-                    mCalendarProperties.clearEventDays();
+                    mCalendarProperties.clearEventDaysExceptSpecial();
 //                    mCalendarProperties.clearGeneralEventDays();
                     mCalendarProperties.addEventToday(eventDay);
                     mCalendarProperties.addEventToday(finishday);
                     mCalendarPageAdapter.notifyDataSetChanged();
                     addEventDaysOnRange(eventDay, finishday, drawable, color);
                 } else {
-                    mCalendarProperties.clearEventDays();
+                    mCalendarProperties.clearEventDaysExceptSpecial();
                     mCalendarProperties.addEventToday(eventDay);
                     mCalendarPageAdapter.notifyDataSetChanged();
                 }
             } else {
-                mCalendarProperties.clearEventDays();
+                mCalendarProperties.clearEventDaysExceptSpecial();
                 mCalendarProperties.addEventToday(eventDay);
                 mCalendarPageAdapter.notifyDataSetChanged();
             }
         } else {
-            mCalendarProperties.clearEventDays();
+            mCalendarProperties.clearEventDaysExceptSpecial();
             mCalendarProperties.addEventToday(eventDay);
             mCalendarPageAdapter.notifyDataSetChanged();
         }
@@ -497,7 +497,7 @@ public class CalendarView extends LinearLayout {
                 if(startday.getCalendar().getTime().before(eventDay.getCalendar().getTime()) || startday.getCalendar().getTime().equals(eventDay.getCalendar().getTime())){
                     mCalendarProperties.removeFinishedEvent();
 //                    mCalendarProperties.clearGeneralEventDays();
-                    mCalendarProperties.clearEventDays();
+                    mCalendarProperties.clearEventDaysExceptSpecial();
                     mCalendarProperties.addEventToday(eventDay);
                     mCalendarProperties.addEventToday(startday);
                     mCalendarPageAdapter.notifyDataSetChanged();

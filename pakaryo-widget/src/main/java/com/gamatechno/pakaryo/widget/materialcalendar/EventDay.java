@@ -18,6 +18,7 @@ import java.util.Calendar;
  */
 
 public class EventDay {
+    public final static String TYPE_SPECIAL = "3";
     public final static String TYPE_GENERAL = "0";
     public final static String TYPE_START = "1";
     public final static String TYPE_FINISH = "2";

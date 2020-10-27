@@ -355,6 +355,15 @@ public class CalendarProperties {
         getEventDays().clear();
     }
 
+    public void clearEventDaysExceptSpecial(){
+        for (int i = 0; i < getEventDays().size(); i++) {
+            EventDay e = getEventDays().get(i);
+            if(e.getType().equals(EventDay.TYPE_SPECIAL)){
+                getEventDays().remove(i);
+            }
+        }
+    }
+
     public void clearGeneralEventDays(){
         for (int i = 0; i < getEventDays().size(); i++) {
             EventDay e = getEventDays().get(i);
