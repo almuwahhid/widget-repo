@@ -1,6 +1,7 @@
 package com.gamatechno.pakaryo.widget.materialcalendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -65,6 +66,8 @@ public class CalendarView extends LinearLayout {
     public static final int ONE_DAY_PICKER = 1;
     public static final int MANY_DAYS_PICKER = 2;
     public static final int RANGE_PICKER = 3;
+
+    public static final String BROADCAST_FINISH_FAILED = "calendarview_failed_really";
 
     private Context mContext;
     private CalendarPageAdapter mCalendarPageAdapter;
@@ -504,6 +507,7 @@ public class CalendarView extends LinearLayout {
                     addEventDaysOnRange(startday, eventDay, drawable, color);
                 } else {
                     Toast.makeText(context, "Finish date must be after start date", Toast.LENGTH_SHORT).show();
+                    context.sendBroadcast(new Intent(BROADCAST_FINISH_FAILED));
                 }
             } else {
                 Toast.makeText(context, "Start Date is null", Toast.LENGTH_SHORT).show();
