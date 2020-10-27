@@ -286,6 +286,10 @@ public class CalendarProperties {
         mEventDays = eventDays;
     }
 
+    public void addEventDays(List<EventDay> eventDays) {
+        mEventDays.addAll(eventDays);
+    }
+
     public void addEventToday(EventDay eventDay){
         for (EventDay e : getEventDays()){
             if(e.isToday()){
