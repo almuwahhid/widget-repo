@@ -356,12 +356,16 @@ public class CalendarProperties {
     }
 
     public void clearEventDaysExceptSpecial(){
+        List<EventDay> specialList = new ArrayList<>();
         for (int i = 0; i < getEventDays().size(); i++) {
             EventDay e = getEventDays().get(i);
             if(e.getType().equals(EventDay.TYPE_SPECIAL)){
-                getEventDays().remove(i);
+                specialList.add(getEventDays().get(i));
             }
         }
+
+        getEventDays().clear();
+        mEventDays.addAll(specialList);
     }
 
     public void clearGeneralEventDays(){
